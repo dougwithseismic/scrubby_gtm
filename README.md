@@ -1,6 +1,6 @@
 # SCRUBBY GTM - The Tag Manager Cleaner
 
-v0.0.1 - Scrubs a GTM export to only include currently used Tags, Triggers and Variables. Paused tags and their referred triggers and variables are binned. Perfect for when you inherit a bag of dick.  Sing like no one is listening 🎉
+v0.0.1 - Scrubs a GTM export to only include currently used Tags, Triggers and Variables. Paused tags and their referred triggers and variables are binned. Perfect for when you inherit a bag of dick and need to put some man-hours in because nuking from orbit isn't an option.  Sing like no one is listening 🎉
 
 # Installation and Usage
 
