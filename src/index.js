@@ -1,7 +1,7 @@
 // GTM Cleaner - Takes a GTM Export and cleans it of paused Tags and unused variables / triggers.
 
-import { gtmExport } from './export.js'
 import fs from 'fs'
+import * as gtmExport from '../IMPORT_ME.json'
 
 const { tag, trigger, variable } = gtmExport.containerVersion
 
@@ -61,31 +61,27 @@ const recursion = (el, bucket = bucket || []) => {
 // liveTags: Get all (not paused) tags, and references to variables and push them to varBucket.
 let exportTags = tag.filter((tag) => !tag.paused)
 
-// triggerIds : Grab the trigger ids from live tags ...
-let triggerIds = exportTags
+// triggerIds : IF THERE ARE TRIGGERS IN THE ACCOUNT, LETS GRAB THEM FROM LIVE TAGS ...
+
+let triggerIds = trigger ? exportTags
   .map((element) => {
     let container = []
-
     element.firingTriggerId.map(firingTrigger => {
       container.push(firingTrigger) 
     })
-
     element.blockingTriggerId?.map(blockingTrigger => {
       container.push(blockingTrigger) 
     })
 
     return container
 
-  }).flat()
-
-
+  }).flat() : []
 
 // ... then grab those Trigger elements from the export. (THERE CAN BE FIRING TRIGGERS AND BLOCKING TRIGGERS)
-console.log()
-let exportTriggers = trigger.filter((element) => {
-  return triggerIds.includes(element.triggerId)
 
-})
+let exportTriggers = trigger ? trigger.filter((element) => {
+  return triggerIds.includes(element.triggerId)
+}) : []
 
 // Then we'll grab the variables referenced in those live tags / triggers..
 let varsFromTags = varScrape(exportTags)
@@ -122,14 +118,14 @@ let finalVars = loopVars(uniqueVars) // All variables referenced by other variab
 
 let exportVars = getVarsFromList([ ...new Set([ ...uniqueVars, ...finalVars ]) ]) // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 
-console.log('\n // BEFORE CLEAN')
-console.log('Tags: ', tag.length)
-console.log('Triggers: ', trigger.length)
-console.log('Variables: ', variable.length)
-console.log('\n // AFTER CLEAN')
-console.log('Live Tags: ', exportTags.length)
-console.log('Live Triggers: ', exportTriggers.length)
-console.log('Live Variables: ', exportVars.length)
+// console.log('\n // BEFORE CLEAN')
+// console.log('Tags: ', tag.length)
+// console.log('Triggers: ', trigger.length)
+// console.log('Variables: ', variable.length)
+// console.log('\n // AFTER CLEAN')
+// console.log('Live Tags: ', exportTags.length)
+// console.log('Live Triggers: ', exportTriggers.length)
+// console.log('Live Variables: ', exportVars.length)
 
 let exportContainer = gtmExport
 
