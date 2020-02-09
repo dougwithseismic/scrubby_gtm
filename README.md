@@ -10,4 +10,4 @@ v0.0.1 - Scrubs a GTM export to only include currently used Tags, Triggers and V
     Container
  4. Replace contents of IMPORT_ME.json with Json found in your export.
  5. Run Scrubby - `yarn start`
- 6. Import gtmScrub_[TIMESTAMP].json into Tag Manager (Admin > Import Container > Overwrite)
+ 6. Import newly generated gtmScrub_[TIMESTAMP].json from root directory into Tag Manager (Admin > Import Container > Overwrite)
